@@ -1,0 +1,248 @@
+# ==========================================
+# PYTHON
+# ==========================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+wheels/
+.eggs/
+pip-wheel-metadata/
+
+# ==========================================
+# UV / PYTHON ENVIRONMENTS
+# ==========================================
+
+.venv/
+venv/
+env/
+ENV/
+.python-version.local
+
+# uv cache (if project-local)
+.uv/
+
+# ==========================================
+# JUPYTER NOTEBOOKS
+# ==========================================
+
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+jupyter_cache/
+
+# ==========================================
+# DATA SCIENCE DATASETS
+# ==========================================
+
+# Raw and processed datasets
+# Leading "/" = only at the repo root, so folders like
+# FlutterApp/lib/data/ or API/data/ are NOT ignored.
+/data/
+/datasets/
+/raw_data/
+/processed_data/
+/interim_data/
+/external_data/
+
+# Common data formats
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.arrow
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.npy
+*.npz
+*.mat
+*.sav
+*.dta
+*.rds
+
+# Compressed datasets
+*.zip
+*.tar
+*.gz
+*.bz2
+*.7z
+
+# ==========================================
+# MACHINE LEARNING MODELS
+# ==========================================
+
+# Root-only, so API/models/ (Pydantic schemas) and
+# FlutterApp/lib/models/ (Dart classes) are NOT ignored.
+/models/
+/checkpoints/
+/weights/
+/artifacts/
+
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.pb
+*.keras
+*.safetensors
+*.model
+*.bin
+
+# Keep the trained model the deployed API loads
+!summative/API/**/*.pkl
+!summative/API/**/*.joblib
+
+# ==========================================
+# EXPERIMENT TRACKING
+# ==========================================
+
+mlruns/
+mlartifacts/
+wandb/
+neptune/
+comet/
+lightning_logs/
+tensorboard/
+runs/
+ray_results/
+
+# ==========================================
+# MACHINE LEARNING FRAMEWORKS
+# ==========================================
+
+# Hugging Face
+.cache/huggingface/
+.huggingface/
+
+# PyTorch
+.torch/
+
+# TensorFlow
+.tensorflow/
+
+# ==========================================
+# VISUALIZATION / GENERATED OUTPUT
+# ==========================================
+
+outputs/
+reports/generated/
+figures/generated/
+plots/
+
+# Figures saved from the notebooks only; images elsewhere
+# (Flutter icons/assets, README screenshots) are kept.
+summative/linear_regression/**/*.png
+summative/linear_regression/**/*.jpg
+summative/linear_regression/**/*.jpeg
+summative/linear_regression/**/*.svg
+summative/linear_regression/**/*.gif
+
+# ==========================================
+# FLUTTER / DART
+# ==========================================
+
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+*.iml
+**/android/.gradle/
+**/android/local.properties
+**/android/key.properties
+*.jks
+*.keystore
+**/ios/Pods/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+
+# ==========================================
+# LOGS
+# ==========================================
+
+logs/
+*.log
+log/
+
+# ==========================================
+# ENVIRONMENT VARIABLES / SECRETS
+# ==========================================
+
+.env
+.env.*
+!.env.example
+!.env.template
+
+secrets/
+credentials.json
+service-account*.json
+*.pem
+*.key
+
+# ==========================================
+# IDEs / EDITORS
+# ==========================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==========================================
+# OPERATING SYSTEM
+# ==========================================
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+
+# ==========================================
+# PROFILING / DEBUGGING
+# ==========================================
+
+.prof
+*.prof
+.profiler/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+htmlcov/
+
+# ==========================================
+# DATABASES
+# ==========================================
+
+*.db
+*.sqlite
+*.sqlite3
+
+# ==========================================
+# TEMPORARY FILES
+# ==========================================
+
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
