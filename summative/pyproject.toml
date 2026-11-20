@@ -1,0 +1,30 @@
+[project]
+name = "summative"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "TheRealToky", email = "tokydisaine.andrianarison@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "lark>=1.2.2",
+    "rfc3987>=1.3.8",
+    "scikit-learn>=1.9.1",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.15.0",
+]
+
+[project.scripts]
+summative = "summative:main"
+
+[build-system]
+requires = ["uv_build>=0.12.10,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.4.0",
+    "jupyter>=1.1.1",
+    "pandas>=3.1.1",
+]
