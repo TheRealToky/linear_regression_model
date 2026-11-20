@@ -3,9 +3,12 @@ from typing import Literal
 
 import joblib
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
+
+from retrain import retrain
 
 MODEL_PATH = Path(__file__).parent / "best_model.pkl"
 
@@ -52,8 +55,43 @@ class FlightInput(BaseModel):
     altitude: Literal["3", "25", "50", "75", "100", "25-50-100-25"] = Field(examples=["50"])
 
 
+# One CSV row for /retrain: the same inputs plus the measured target
+class TrainingRow(FlightInput):
+    power: float = Field(ge=-10, le=1100, description="Measured power (W)")
+
+
+training_rows = TypeAdapter(list[TrainingRow])
+
+
 @app.post("/predict")
 def predict(data: FlightInput):
     row = pd.DataFrame([data.model_dump()])
     power = model.predict(row)[0]
     return {"predicted_power_w": round(float(power), 2)}
+
+
+@app.post("/retrain")
+def retrain_model(file: UploadFile):
+    global model
+    try:
+        df = pd.read_csv(file.file, dtype={"altitude": str})
+    except Exception:
+        raise HTTPException(400, "The file could not be read as a CSV.")
+    if df.empty:
+        raise HTTPException(400, "The CSV has no rows.")
+    missing = set(TrainingRow.model_fields) - set(df.columns)
+    if missing:
+        raise HTTPException(422, f"Missing columns: {sorted(missing)}")
+
+    # Same ranges and labels as /predict, on every row. loc = [row number, column].
+    # Empty cells become None so they fail as missing values.
+    # strict=False: a CSV is all text, so a cell like "4.0" may be read as a number.
+    records = df.astype(object).where(df.notna(), None).to_dict("records")
+    try:
+        rows = training_rows.validate_python(records, strict=False)
+    except ValidationError as e:
+        raise RequestValidationError(e.errors(include_url=False)[:10])  # first 10 only
+
+    new_rows = pd.DataFrame([r.model_dump() for r in rows])
+    model = retrain(model, new_rows)  # swap: the next /predict uses the new model
+    return {"message": "Model retrained", "rows_added": len(new_rows)}

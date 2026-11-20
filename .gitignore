@@ -98,6 +98,8 @@ jupyter_cache/
 # Keep the trained model the deployed API loads
 !summative/API/**/*.pkl
 !summative/API/**/*.joblib
+# ...and the training rows /retrain refits on
+!summative/API/train_data.csv.gz
 
 # ==========================================
 # EXPERIMENT TRACKING
