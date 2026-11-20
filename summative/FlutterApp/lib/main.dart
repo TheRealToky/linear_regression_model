@@ -12,6 +12,7 @@ class PowerDrawApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Drone Power Draw',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(colorSchemeSeed: Colors.indigo),
       home: const PredictPage(),
     );
@@ -100,7 +101,10 @@ class _PredictPageState extends State<PredictPage> {
                         signed: true,
                       )
                     : TextInputType.text,
-                textInputAction: TextInputAction.next,
+                // "Next" on the keyboard jumps to the next field, "Done" on the last one
+                textInputAction: field == inputFields.last
+                    ? TextInputAction.done
+                    : TextInputAction.next,
                 decoration: InputDecoration(
                   labelText: field.label,
                   helperText: field.help,
