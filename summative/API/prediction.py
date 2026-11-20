@@ -4,12 +4,32 @@ from typing import Literal
 import joblib
 import pandas as pd
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field
 
 MODEL_PATH = Path(__file__).parent / "best_model.pkl"
 
 app = FastAPI(title="Drone Power Draw API")
 model = joblib.load(MODEL_PATH)
+
+# CORS decides which *websites* (browser origins) may call this API. The Flutter
+# Android/iOS app is not a browser, so CORS does not apply to it.
+# - Allowed origins: only the API's own Render site, where Swagger UI runs. No
+#   "*" and no other site, so any other website's JavaScript is blocked.
+# - Allowed methods: only POST, the method of /predict and /retrain.
+# - Allowed headers: only Content-Type, needed to send JSON or a CSV upload.
+# - Credentials: off. The API uses no cookies or auth headers, so browsers
+#   must not send any.
+ALLOWED_ORIGINS = [
+    "https://power-draw-api.onrender.com",  # I'll change this later, probably
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
+    allow_credentials=False,
+)
 
 
 class FlightInput(BaseModel):
