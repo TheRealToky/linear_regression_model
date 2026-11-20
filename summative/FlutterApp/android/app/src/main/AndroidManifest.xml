@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Needed to call the Render API (debug builds add it on their own, release builds don't) -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="power_draw_app"
+        android:label="Power Draw"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

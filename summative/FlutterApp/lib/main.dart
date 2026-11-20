@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:material_ui/material_ui.dart';
 
+import 'api.dart';
 import 'fields.dart';
 
 void main() => runApp(const PowerDrawApp());
@@ -31,7 +30,10 @@ class _PredictPageState extends State<PredictPage> {
   final _controllers = {
     for (final field in inputFields) field.key: TextEditingController(),
   };
+  // What the display area shows, and how
   String _result = 'Fill in every field, then tap Predict.';
+  bool _isError = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -51,14 +53,32 @@ class _PredictPageState extends State<PredictPage> {
     for (final field in inputFields) {
       final text = _controllers[field.key]!.text.trim();
       if (text.isEmpty) continue;
-      body[field.key] = field.isNumber ? (num.tryParse(text) ?? text) : text;
+      final number = num.tryParse(text);
+      // isFinite: "Infinity" and "NaN" parse as numbers but aren't valid JSON
+      body[field.key] = field.isNumber && number != null && number.isFinite
+          ? number
+          : text;
     }
     return body;
   }
 
-  void _predict() {
-    // Step 3 sends this body to the API; for now it is only shown
-    setState(() => _result = jsonEncode(_buildBody()));
+  Future<void> _predict() async {
+    FocusScope.of(context).unfocus(); // hide the keyboard to show the result
+    setState(() {
+      _isLoading = true;
+      _isError = false;
+      _result = 'Predicting... the first request can take up to a minute.';
+    });
+
+    try {
+      final watts = await predictPower(_buildBody());
+      _result = 'Predicted power draw: ${watts.toStringAsFixed(2)} W';
+    } on PredictionError catch (e) {
+      _result = e.message;
+      _isError = true;
+    }
+    if (!mounted) return; // the page was closed while waiting
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -89,16 +109,27 @@ class _PredictPageState extends State<PredictPage> {
               ),
               const SizedBox(height: 12),
             ],
-            FilledButton(onPressed: _predict, child: const Text('Predict')),
+            // Disabled (null) while a request is running, so it can't be sent twice
+            FilledButton(
+              onPressed: _isLoading ? null : _predict,
+              child: const Text('Predict'),
+            ),
             const SizedBox(height: 16),
-            // Display area: the prediction or a readable error goes here
+            // Display area: the prediction, or a readable error in red
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: colors.surfaceContainerHighest,
+                color: _isError
+                    ? colors.errorContainer
+                    : colors.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(_result),
+              child: Text(
+                _result,
+                style: TextStyle(
+                  color: _isError ? colors.onErrorContainer : colors.onSurface,
+                ),
+              ),
             ),
           ],
         ),
