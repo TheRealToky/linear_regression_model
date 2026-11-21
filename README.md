@@ -21,7 +21,7 @@ The free Render plan sleeps when idle, so the first request can take about a min
 
 ## Video demo
 
-YouTube: 
+YouTube: [https://youtu.be/cDEPy3cDcMk](https://youtu.be/cDEPy3cDcMk)
 
 ## Run the mobile app
 
