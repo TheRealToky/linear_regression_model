@@ -25,6 +25,7 @@ model = joblib.load(MODEL_PATH)
 #   must not send any.
 ALLOWED_ORIGINS = [
     "https://power-draw-api.onrender.com",
+    "http://localhost:8080",  # Flutter web debug (flutter run -d chrome --web-port 8080)
 ]
 app.add_middleware(
     CORSMiddleware,
