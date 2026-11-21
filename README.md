@@ -2,9 +2,9 @@
 
 ## Mission and problem
 
-**Mission:** My mission is to solve problems by using computation. I achieve that by using tools such as python, C/C++, calculus, linear algebra, etc to automate systems, improve productivity, and attack various problems in engineering, science, or machine learning.
+**Mission:** My mission is to solve complex problems through computation, mathematics, and engineering. I aim to model, simulate, automate, and optimize systems across science, technology, and industry.
 
-**Problem:** This project is aimed to be used by mechatronics engineers, flight operators, etc to predict how much power would a drone need based on flight information. Delivery drones run out of battery when people misjudge how much power a flight will need. This project predicts a quadcopter's instantaneous power draw (W) from its payload, speed, wind, height and flight phase, so operators can plan routes and battery swaps before take-off.
+**Problem:** Delivery drones run out of battery when people misjudge how much power a flight will need. This project predicts a quadcopter's instantaneous power draw (W) from its payload, speed, wind, height and flight phase, so operators can plan routes and battery swaps before take-off.
 
 ## Dataset
 
