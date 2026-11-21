@@ -17,7 +17,7 @@ model = joblib.load(MODEL_PATH)
 
 # CORS decides which *websites* (browser origins) may call this API. The Flutter
 # Android/iOS app is not a browser, so CORS does not apply to it.
-# - Allowed origins: only the API's own Render site, where Swagger UI runs. No
+# - Allowed origins: the API's own Render site, where Swagger UI runs and the flutter web debug address. No
 #   "*" and no other site, so any other website's JavaScript is blocked.
 # - Allowed methods: only POST, the method of /predict and /retrain.
 # - Allowed headers: only Content-Type, needed to send JSON or a CSV upload.
