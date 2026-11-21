@@ -2,7 +2,6 @@
 name = "summative"
 version = "0.1.0"
 description = "Add your description here"
-readme = "README.md"
 authors = [
     { name = "TheRealToky", email = "tokydisaine.andrianarison@gmail.com" }
 ]
@@ -15,12 +14,9 @@ dependencies = [
     "statsmodels>=0.15.0",
 ]
 
-[project.scripts]
-summative = "summative:main"
-
-[build-system]
-requires = ["uv_build>=0.12.10,<0.13.0"]
-build-backend = "uv_build"
+[tool.uv]
+# Only an environment for the notebook: nothing to build or install
+package = false
 
 [dependency-groups]
 dev = [

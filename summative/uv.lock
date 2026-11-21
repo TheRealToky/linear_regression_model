@@ -2044,7 +2044,7 @@ wheels = [
 [[package]]
 name = "summative"
 version = "0.1.0"
-source = { editable = "." }
+source = { virtual = "." }
 dependencies = [
     { name = "lark" },
     { name = "rfc3987" },
