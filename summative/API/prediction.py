@@ -24,7 +24,7 @@ model = joblib.load(MODEL_PATH)
 # - Credentials: off. The API uses no cookies or auth headers, so browsers
 #   must not send any.
 ALLOWED_ORIGINS = [
-    "https://power-draw-api.onrender.com",  # I'll change this later, probably
+    "https://power-draw-api.onrender.com",
 ]
 app.add_middleware(
     CORSMiddleware,
