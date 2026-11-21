@@ -9,7 +9,7 @@
 ## Dataset
 
 [Data Collected with Package Delivery Quadcopter Drone](https://doi.org/10.1184/R1/12683453) (Carnegie Mellon University, KiltHub).
-209 real package-delivery flights of a DJI Matrice 100 quadcopter, logged at about 10 Hz: roughly 258,000 rows of onboard sensor readings
+209 real package-delivery flights of a DJI Matrice 100 quadcopter, logged at about 5 Hz: roughly 258,000 rows of onboard sensor readings
 (wind, battery voltage and current, GPS position, orientation, velocity, acceleration) plus a per-flight table of payload, programmed speed, altitude and route.
 The target is power in watts, is battery voltage × current. The model uses 8 numeric and 3 categorical inputs (route, flight phase, planned altitude).
 
